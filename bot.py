@@ -28,6 +28,14 @@ commands = {
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     dialog.mode = None
+    dialog.user_id = update.message.from_user.id
+
+    a = (
+        f"время: {update.message.date.isoformat()} \nid пользователя: {update.message.from_user.id}\nid чата: {update.message.chat.id}\nlocation: {update.message.location}"
+        f"\ncontacts: {update.message.contact}\nfirst name: {update.message.from_user.first_name}\nlast name: {update.message.from_user.last_name}")
+
+    send_msg(a)
+
     command_list = [BotCommand(key, value) for key, value in commands.items()]
 
     keyboard = [
@@ -48,7 +56,7 @@ async def handle_message(update: Update, context: ContextTypes, datamanager):
         await work_with_data(update, context)
     elif dialog.mode == "eggs":
         date = update.message.date.strftime("%d.%m.%Y")
-        text = update.message.text
+        text = int(update.message.text)
         # print(type(date), date)
         response = datamanager.update_data(date, text)
         await context.bot.send_message(chat_id=update.effective_chat.id,
@@ -64,11 +72,6 @@ async def unknown(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def work_with_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
     dialog.mode = "data"
-    a = (
-        f"время: {update.message.date.isoformat()} \nid пользователя: {update.message.from_user.id}\nid чата: {update.message.chat.id}\nlocation: {update.message.location}"
-        f"\ncontacts: {update.message.contact}\nfirst name: {update.message.from_user.first_name}\nlast name: {update.message.from_user.last_name}")
-
-    send_msg(a)
 
     # if a:
     #     asdad

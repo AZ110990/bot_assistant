@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from bot import *
 
 load_dotenv()
-TELEGRAM_TOKEN = os.getenv("TOKEN_BOT_API_TEST")
+TELEGRAM_TOKEN = os.getenv("TOKEN_BOT_API_ZARBOT")
 
 datamanager = DataManager()
 
